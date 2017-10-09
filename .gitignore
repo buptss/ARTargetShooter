@@ -1,0 +1,10 @@
+erdata
+xcshareddata
+*.xccheckout
+*.moved-aside
+DerivedData
+*.hmap
+*.ipa
+*.xcuserstate
+*.xcuserdatad
+*.DS_Store

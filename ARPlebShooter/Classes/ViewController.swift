@@ -71,10 +71,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
     
     func configureSession() {
-        if ARWorldTrackingSessionConfiguration.isSupported { // checks if user's device supports the more precise ARWorldTrackingSessionConfiguration
+        if ARWorldTrackingConfiguration.isSupported { // checks if user's device supports the more precise ARWorldTrackingSessionConfiguration
             // equivalent to `if utsname().hasAtLeastA9()`
             // Create a session configuration
-            let configuration = ARWorldTrackingSessionConfiguration()
+            let configuration = ARWorldTrackingConfiguration()
             configuration.planeDetection = .horizontal
             
             // Run the view's session
@@ -82,7 +82,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             sceneView.session.run(configuration)
         } else {
             // slightly less immersive AR experience due to lower end processor
-            let configuration = ARSessionConfiguration()
+            let configuration = ARWorldTrackingConfiguration()
             // Run the view's session
             sceneView.session.run(configuration)
         }

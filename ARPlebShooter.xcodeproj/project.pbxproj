@@ -317,10 +317,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 3W9Q979XJM;
+				DEVELOPMENT_TEAM = 35B2KE884X;
 				INFOPLIST_FILE = ARPlebShooter/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.bbpiepho.ARPlebShooter;
+				PRODUCT_BUNDLE_IDENTIFIER = com.netease.ARPlebShooter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -331,10 +331,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 3W9Q979XJM;
+				DEVELOPMENT_TEAM = 35B2KE884X;
 				INFOPLIST_FILE = ARPlebShooter/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.bbpiepho.ARPlebShooter;
+				PRODUCT_BUNDLE_IDENTIFIER = com.netease.ARPlebShooter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

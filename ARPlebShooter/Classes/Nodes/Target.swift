@@ -15,15 +15,16 @@ class Target: SCNNode {
         super.init()
         var geometry:SCNGeometry
         
+        let scale: CGFloat=5.0
         switch ShapeType.random() {
         case .Box:
-            geometry = SCNBox(width: 0.05, height: 0.05, length: 0.05, chamferRadius: 0.0)
+            geometry = SCNBox(width: 0.05*scale, height: 0.05*scale, length: 0.05*scale, chamferRadius: 0.0)
         case .Sphere:
-            geometry = SCNSphere(radius: 0.025)
+            geometry = SCNSphere(radius: 0.025*scale)
         case .Capsule:
-            geometry = SCNCapsule(capRadius: 0.015, height: 0.035)
+            geometry = SCNCapsule(capRadius: 0.015*scale, height: 0.035*scale)
         case .Cylinder:
-            geometry = SCNCylinder(radius: 0.02, height: 0.05)
+            geometry = SCNCylinder(radius: 0.02*scale, height: 0.05*scale)
         }
 
         

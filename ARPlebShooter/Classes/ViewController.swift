@@ -347,6 +347,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 extension ViewController : SCNPhysicsContactDelegate
 {
     func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
+        print(contact.nodeA.physicsBody?.categoryBitMask, contact.nodeB.physicsBody?.categoryBitMask, CollisionCategory.target.rawValue, CollisionCategory.bullets.rawValue)
+        
         if (contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.target.rawValue && contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.bullets.rawValue) ||
             (contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.bullets.rawValue && contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.target.rawValue){
             //target was hit from bullet!

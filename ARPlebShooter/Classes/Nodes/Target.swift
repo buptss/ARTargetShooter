@@ -26,13 +26,13 @@ class Target: SCNNode {
         case .Cylinder:
             geometry = SCNCylinder(radius: 0.02*scale, height: 0.05*scale)
         case .Pyramid:
-            geometry = SCNPyramid(width: 1.0, height: 1.0, length: 1.0)
+            geometry = SCNPyramid(width: 0.05*scale, height: 0.05*scale, length: 0.05*scale)
         case .Torus:
-            geometry = SCNTorus(ringRadius: 0.5, pipeRadius: 0.25)
+            geometry = SCNTorus(ringRadius: 0.02*scale, pipeRadius: 0.01*scale)
         case .Cone:
-            geometry = SCNCone(topRadius: 0.25, bottomRadius: 0.5, height: 1.0)
+            geometry = SCNCone(topRadius: 0.01*scale, bottomRadius: 0.02*scale, height: 0.05*scale)
         case .Tube:
-            geometry = SCNTube(innerRadius: 0.25, outerRadius: 0.5, height: 1.0)
+            geometry = SCNTube(innerRadius: 0.01*scale, outerRadius: 0.02*scale, height: 0.05*scale)
         }
 
         

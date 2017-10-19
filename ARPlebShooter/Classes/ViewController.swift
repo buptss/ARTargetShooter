@@ -41,9 +41,22 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.delegate = self
         
         // Create a new empty scene
+        // test
+        // let scene = SCNScene(named:"art.scnassets/lowpoly_tree_sample.dae")!
         let scene = SCNScene()
+//        let car = SCNScene(named:"art.scnassets/testmodel2.dae")
+//        guard let scne = car else{
+//            print("模型文件加载失败")
+//            // return nil
+//        }
+        //if let knight = chessPieces?.rootNode.childNodeWithName("Knight", recursively: true) {
+        //    sceneView.scene?.rootNode.addChildNode(knight)
+        //}
+        //sceneView.scene?.rootNode.addChildNode(knight)        // Set the scene to the view
+        // let knight = chessPieces?.rootNode.childNode(withName:"knight",recursively:false)
         
-        // Set the scene to the view
+        // sceneView.scene = chessPieces
+        // sceneView.scene.rootNode.addChildNode(knight!)
         sceneView.scene = scene
         sceneView.scene.physicsWorld.contactDelegate = self
         
@@ -200,17 +213,38 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
     
     func addTarget() {
-        let targetNode = Target()
+        let car = SCNScene(named: "art.scnassets/car.obj")
+//        guard let scne = car else{
+//            print("模型文件加载失败")
+//            // return nil
+//        }
+        let scne = car!
+        // sceneView.scene = scne
+        let node = scne.rootNode.childNodes[0]
+//        node.position = pos
+//        if let rotation = rotation {
+//            node.rotation = rotation
+//        }
         let posX = floatBetween(-0.5, and: 0.5)
         let posY = Float(0)
         let posZ = -2
-        targetNode.position = SCNVector3(posX, posY, Float(posZ)) // SceneKit/AR coordinates are in meters
-        sceneView.scene.rootNode.addChildNode(targetNode)
-        gameHelper.liveTargets.append(targetNode)
+        node.position = SCNVector3(posX, posY, Float(posZ))
+        sceneView.scene.rootNode.addChildNode(node)
+        // gameHelper.liveTargets.append(node)
         
-        self.directNodeTowardCamera(targetNode)
+        self.directNodeTowardCamera(node)
         
-        print("Added Target! Position:\(targetNode.position)")
+//        let targetNode = Target()
+//        let posX = floatBetween(-0.5, and: 0.5)
+//        let posY = Float(0)
+//        let posZ = -2
+//        targetNode.position = SCNVector3(posX, posY, Float(posZ)) // SceneKit/AR coordinates are in meters
+//        sceneView.scene.rootNode.addChildNode(targetNode)
+//        gameHelper.liveTargets.append(targetNode)
+//
+//        self.directNodeTowardCamera(targetNode)
+//
+//        print("Added Target! Position:\(targetNode.position)")
     }
     
     func addInitialTarget() {

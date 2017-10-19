@@ -32,7 +32,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             }
         }
     }
-    
+
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,11 +44,11 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // test
         // let scene = SCNScene(named:"art.scnassets/lowpoly_tree_sample.dae")!
         let scene = SCNScene()
-        //        let car = SCNScene(named:"art.scnassets/testmodel2.dae")
-        //        guard let scne = car else{
-        //            print("模型文件加载失败")
-        //            // return nil
-        //        }
+//        let car = SCNScene(named:"art.scnassets/testmodel2.dae")
+//        guard let scne = car else{
+//            print("模型文件加载失败")
+//            // return nil
+//        }
         //if let knight = chessPieces?.rootNode.childNodeWithName("Knight", recursively: true) {
         //    sceneView.scene?.rootNode.addChildNode(knight)
         //}
@@ -100,7 +100,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             sceneView.session.run(configuration)
         }
     }
-    
+
     // MARK: - Actions
     @IBAction func didTapScreen(_ sender: UITapGestureRecognizer) { // fire bullet in direction camera is facing
         switch gameHelper.state {
@@ -118,7 +118,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         {
             let (_, targetPosition) = self.getTargetVector(for: target)
             let (userDirection, _) = self.getUserVector()
-            
+
             
             if(fabs(targetPosition.x) > 0.6 && targetPosition.x > userDirection.x)
             {
@@ -127,7 +127,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                     if self.rightDirectionIndicator.isHidden {
                         self.rightDirectionIndicator.isHidden = false
                         self.leftDirectionIndicator.isHidden = true
-                        
+
                         self.animateDirectionIndicators()
                     }
                 }
@@ -138,7 +138,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                     if self.leftDirectionIndicator.isHidden {
                         self.leftDirectionIndicator.isHidden = false
                         self.rightDirectionIndicator.isHidden = true
-                        
+
                         self.animateDirectionIndicators()
                     }
                 }
@@ -212,64 +212,71 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         self.playerNode = newPlayerNode
     }
     
+    func addNormalTarget() {
+        let targetNode = Target()
+        let posX = floatBetween(-0.5, and: 0.5)
+        let posY = Float(0)
+        let posZ = -2
+        targetNode.position = SCNVector3(posX, posY, Float(posZ)) // SceneKit/AR coordinates are in meters
+        sceneView.scene.rootNode.addChildNode(targetNode)
+        gameHelper.liveTargets.append(targetNode)
+        
+        self.directNodeTowardCamera(targetNode)
+        
+        print("Added Target! Position:\(targetNode.position)")
+    }
+    
     func addTarget() {
         let car = SCNScene(named: "art.scnassets/ship.scn")
-        //        guard let scne = car else{
-        //            print("模型文件加载失败")
-        //            // return nil
-        //        }
+//        guard let scne = car else{
+//            print("模型文件加载失败")
+//            // return nil
+//        }
         let scne = car!
         // sceneView.scene = scne
         let node = scne.rootNode.childNodes[0]
-        //        node.position = pos
-        //        if let rotation = rotation {
-        //            node.rotation = rotation
-        //        }
+//        node.position = pos
+//        if let rotation = rotation {
+//            node.rotation = rotation
+//        }
         let posX = floatBetween(-0.5, and: 0.5)
         let posY = Float(0)
         let posZ = -4
-        
         node.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
         node.physicsBody?.isAffectedByGravity = false
         node.physicsBody?.charge = -0.5
-        
         node.physicsBody?.categoryBitMask = CollisionCategory.target.rawValue
         node.physicsBody?.contactTestBitMask = CollisionCategory.bullets.rawValue
         node.physicsBody?.collisionBitMask = CollisionCategory.target.rawValue
-        
-        
         node.position = SCNVector3(posX, posY, Float(posZ))
         sceneView.scene.rootNode.addChildNode(node)
         // gameHelper.liveTargets.append(node)
-        
-        
-        
-        
         self.directNodeTowardCamera(node)
         
         
         
-        //        let targetNode = Target()
-        //        let posX = floatBetween(-0.5, and: 0.5)
-        //        let posY = Float(0)
-        //        let posZ = -2
-        //        targetNode.position = SCNVector3(posX, posY, Float(posZ)) // SceneKit/AR coordinates are in meters
-        //        sceneView.scene.rootNode.addChildNode(targetNode)
-        //        gameHelper.liveTargets.append(targetNode)
-        //
-        //        self.directNodeTowardCamera(targetNode)
-        //
-        //        print("Added Target! Position:\(targetNode.position)")
+//        let targetNode = Target()
+//        let posX = floatBetween(-0.5, and: 0.5)
+//        let posY = Float(0)
+//        let posZ = -2
+//        targetNode.position = SCNVector3(posX, posY, Float(posZ)) // SceneKit/AR coordinates are in meters
+//        sceneView.scene.rootNode.addChildNode(targetNode)
+//        gameHelper.liveTargets.append(targetNode)
+//
+//        self.directNodeTowardCamera(targetNode)
+//
+//        print("Added Target! Position:\(targetNode.position)")
     }
     
     func addInitialTarget() {
         //Add initial target after 1.5
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
-            self.addTarget()
+            self.addNormalTarget()
+            self.addNormalTarget()
         })
     }
     
-    func beginPlaying() {
+    func beginPlaying() {        
         self.userScore = 0
         gameHelper.state = .Playing
         self.fireParticleNode?.removeFromParentNode()
@@ -348,7 +355,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         let mat = target.presentation.transform // 4x4 transform matrix describing target node in world space
         let dir = SCNVector3(-1 * mat.m31, -1 * mat.m32, -1 * mat.m33) // orientation of target node in world space
         let pos = SCNVector3(mat.m41, mat.m42, mat.m43) // location of target node world space
-        
+
         return (dir, pos)
     }
     
@@ -392,7 +399,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
 }
 
-// MARK: - SCNPhysicsContactDelegate
+    // MARK: - SCNPhysicsContactDelegate
 extension ViewController : SCNPhysicsContactDelegate
 {
     func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
@@ -404,8 +411,16 @@ extension ViewController : SCNPhysicsContactDelegate
             self.removeNode(contact.nodeB)
             self.removeNode(contact.nodeA)
             self.userScore += 1
+            if self.userScore < 3 {
+                /* 如果条件为 true 执行以下语句 */
+                self.addNormalTarget();
+            }else {
+                /* 如果条件为 true 执行以下语句 */
+                self.addTarget();
+            }
             
-            self.addTarget()
+            
+            
         }else if (contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.target.rawValue &&
             contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.player.rawValue) ||
             (contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.player.rawValue &&
@@ -421,7 +436,7 @@ extension ViewController : SCNPhysicsContactDelegate
     }
 }
 
-// MARK: - ARSessionDelegate
+    // MARK: - ARSessionDelegate
 extension ViewController : ARSessionDelegate
 {
     func session(_ session: ARSession, didUpdate frame: ARFrame) {
@@ -432,11 +447,10 @@ extension ViewController : ARSessionDelegate
     }
 }
 
-// MARK: - SCNSceneRendererDelegate
+    // MARK: - SCNSceneRendererDelegate
 extension ViewController : SCNSceneRendererDelegate
 {
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
-        
+
     }
 }
-

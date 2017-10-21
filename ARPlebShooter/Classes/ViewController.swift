@@ -20,7 +20,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     @IBOutlet weak var rightDirectionIndicator: UILabel!
     
     var fireParticleNode : SCNNode?
-    
+    var player: AVAudioPlayer!
     var playerNode : SCNNode?
     let gameHelper = GameHelper.sharedInstance
     
@@ -101,11 +101,35 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
     }
 
+    // MARK: - Sound Effects
+    
+    func playSoundEffect(ofType effect: SoundEffect) {
+        
+        // Async to avoid substantial cost to graphics processing (may result in sound effect delay however)
+        DispatchQueue.main.async {
+            do
+            {
+                if let effectURL = Bundle.main.url(forResource: effect.rawValue, withExtension: "mp3") {
+                    
+                    self.player = try AVAudioPlayer(contentsOf: effectURL)
+                    self.player.play()
+                    
+                }
+            }
+            catch let error as NSError {
+                print(error.description)
+            }
+        }
+    }
+    
+
+
     // MARK: - Actions
     @IBAction func didTapScreen(_ sender: UITapGestureRecognizer) { // fire bullet in direction camera is facing
         switch gameHelper.state {
         case .Playing:
             self.shootBullet()
+            self.playSoundEffect(ofType: .torpedo)
         case .TapToPlay:
             self.beginPlaying()
         }
@@ -271,8 +295,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     func addInitialTarget() {
         //Add initial target after 1.5
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
-            self.addNormalTarget()
-            self.addNormalTarget()
+            self.addTarget()
+            // self.addNormalTarget()
         })
     }
     
@@ -320,6 +344,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     func removeNode(_ node: SCNNode) {
         if node is Target {
+            // Play explosion sound for bullet-ship collisions
+            self.playSoundEffect(ofType: .explosion)
+            
             let particleSystem = SCNParticleSystem(named: "explosion", inDirectory: "art.scnassets/")
             //let particleSize = particleSystem?.particleSize
             let systemNode = SCNNode()
@@ -328,7 +355,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             systemNode.position = node.presentation.position
             //node.addChildNode(systemNode)
             sceneView.scene.rootNode.addChildNode(systemNode)
-            
+
             if let target = node as? Target
             {
                 if let targetIndex = gameHelper.liveTargets.index(of: target)
@@ -337,6 +364,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                 }
             }
         }else if node is Player {
+            // Play collision sound for all collisions (bullet-bullet, etc.)
+            self.playSoundEffect(ofType: .collision)
+            
             let particleSystem = SCNParticleSystem(named: "fire", inDirectory: "art.scnassets/")
             //let particleSize = particleSystem?.particleSize
             self.fireParticleNode = SCNNode()
@@ -411,13 +441,15 @@ extension ViewController : SCNPhysicsContactDelegate
             self.removeNode(contact.nodeB)
             self.removeNode(contact.nodeA)
             self.userScore += 1
-            if self.userScore < 3 {
-                /* 如果条件为 true 执行以下语句 */
-                self.addNormalTarget();
-            }else {
-                /* 如果条件为 true 执行以下语句 */
-                self.addTarget();
-            }
+            self.addTarget()
+            
+//            if self.userScore < 3 {
+//                /* 如果条件为 true 执行以下语句 */
+//                self.addNormalTarget();
+//            }else {
+//                /* 如果条件为 true 执行以下语句 */
+//                self.addTarget();
+//            }
             
             
             
@@ -454,3 +486,10 @@ extension ViewController : SCNSceneRendererDelegate
 
     }
 }
+
+enum SoundEffect: String {
+    case explosion = "explosion"
+    case collision = "collision"
+    case torpedo = "torpedo"
+}
+

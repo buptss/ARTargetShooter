@@ -5,6 +5,10 @@
 //  Created by Brent Piephoff on 7/15/17.
 //  Copyright © 2017 Brent Piephoff. All rights reserved.
 //
+import UIKit
+import SceneKit
+import SpriteKit
+import ARKit
 
 class GameHelper {
     static let sharedInstance = GameHelper()
@@ -12,7 +16,7 @@ class GameHelper {
     var score:Int
     var state = GameStateType.TapToPlay
     var liveTargets = [Target]()
-    
+    var livePlanes = [SCNNode]()
     private init() {
         score = 0
     }

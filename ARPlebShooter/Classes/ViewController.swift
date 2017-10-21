@@ -251,11 +251,12 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
     
     func addTarget() {
+        // let targeNode = AirPlane()
+        let posX = floatBetween(-0.5, and: 0.5)
+        let posY = Float(0)
+        let posZ = -4
+        
         let car = SCNScene(named: "art.scnassets/ship.scn")
-//        guard let scne = car else{
-//            print("模型文件加载失败")
-//            // return nil
-//        }
         let scne = car!
         // sceneView.scene = scne
         let node = scne.rootNode.childNodes[0]
@@ -263,33 +264,22 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 //        if let rotation = rotation {
 //            node.rotation = rotation
 //        }
-        let posX = floatBetween(-0.5, and: 0.5)
-        let posY = Float(0)
-        let posZ = -4
+
         node.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
         node.physicsBody?.isAffectedByGravity = false
         node.physicsBody?.charge = -0.5
         node.physicsBody?.categoryBitMask = CollisionCategory.target.rawValue
         node.physicsBody?.contactTestBitMask = CollisionCategory.bullets.rawValue
         node.physicsBody?.collisionBitMask = CollisionCategory.target.rawValue
+        
+        
         node.position = SCNVector3(posX, posY, Float(posZ))
         sceneView.scene.rootNode.addChildNode(node)
         // gameHelper.liveTargets.append(node)
         self.directNodeTowardCamera(node)
+        gameHelper.livePlanes.append(node)
         
         
-        
-//        let targetNode = Target()
-//        let posX = floatBetween(-0.5, and: 0.5)
-//        let posY = Float(0)
-//        let posZ = -2
-//        targetNode.position = SCNVector3(posX, posY, Float(posZ)) // SceneKit/AR coordinates are in meters
-//        sceneView.scene.rootNode.addChildNode(targetNode)
-//        gameHelper.liveTargets.append(targetNode)
-//
-//        self.directNodeTowardCamera(targetNode)
-//
-//        print("Added Target! Position:\(targetNode.position)")
     }
     
     func addInitialTarget() {
@@ -312,7 +302,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     func endPlaying() {
         DispatchQueue.main.async {
-            self.statusLabel.text = "You're dead, loser!\nTap to Play!"
+            self.statusLabel.text = "Tap to Play!"
             self.tapGestureRecognizer.isEnabled = false
             
             //Add a delay for re-enabling the tap gesture recognizer so that a user who is spam clicking to shoot will notice that he died and not be confused about why his score went to 0
@@ -346,7 +336,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         if node is Target {
             // Play explosion sound for bullet-ship collisions
             self.playSoundEffect(ofType: .explosion)
-            
             let particleSystem = SCNParticleSystem(named: "explosion", inDirectory: "art.scnassets/")
             //let particleSize = particleSystem?.particleSize
             let systemNode = SCNNode()
@@ -376,6 +365,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             sceneView.pointOfView!.addChildNode(self.fireParticleNode!)
         }
         // remove node
+//        if(node is not nil){
+//
+//        }
         node.removeFromParentNode()
     }
     

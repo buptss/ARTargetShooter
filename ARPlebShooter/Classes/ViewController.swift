@@ -320,11 +320,18 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         node.physicsBody?.clearAllForces()
         //Make cube node go towards camera
         let (_, playerPosition) = self.getCameraVector()
+        let scale: Float=5.0
+//        let impulseVector = SCNVector3(
+//            x: self.randomOneOfTwoInputFloats(-0.50, and: 0.50),
+//            y: playerPosition.y,
+//            z: playerPosition.z
+//        )
+        
         let impulseVector = SCNVector3(
-            x: self.randomOneOfTwoInputFloats(-0.50, and: 0.50),
-            y: playerPosition.y,
-            z: playerPosition.z
-        )
+            x: self.randomOneOfTwoInputFloats(-0.50*scale, and: 0.50*scale),
+            y: scale*playerPosition.y,
+            z: scale*playerPosition.z
+        ) 
         
         //Makes generated nodes rotate when applied with force
         let positionOnNodeToApplyForceTo = SCNVector3(x: 0.005, y: 0.005, z: 0.005)

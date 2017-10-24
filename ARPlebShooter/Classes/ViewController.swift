@@ -252,9 +252,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     func addTarget() {
         // let targeNode = AirPlane()
-        let posX = floatBetween(-0.5, and: 0.5)
-        let posY = Float(0)
-        let posZ = -4
+        let scale: Float = 0.18
+        let posX = floatBetween(-16*scale, and: 16*scale)
+        let posY = floatBetween(-9*scale, and: 9*scale)
+        let posZ = -6
         
         let car = SCNScene(named: "art.scnassets/ship.scn")
         let scne = car!
@@ -267,7 +268,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
         node.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
         node.physicsBody?.isAffectedByGravity = false
-        node.physicsBody?.charge = -0.5
+        node.physicsBody?.charge = -10
         node.physicsBody?.categoryBitMask = CollisionCategory.target.rawValue
         node.physicsBody?.contactTestBitMask = CollisionCategory.bullets.rawValue
         node.physicsBody?.collisionBitMask = CollisionCategory.target.rawValue
@@ -320,23 +321,26 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         node.physicsBody?.clearAllForces()
         //Make cube node go towards camera
         let (_, playerPosition) = self.getCameraVector()
+        let scale: Float = 5
         let impulseVector = SCNVector3(
-            x: self.randomOneOfTwoInputFloats(-0.50, and: 0.50),
-            y: playerPosition.y,
+//            x: self.randomOneOfTwoInputFloats(-0.2, and: 0.2),
+            x: playerPosition.x,
+            y: playerPosition.y*scale,
             z: playerPosition.z
         )
         
         //Makes generated nodes rotate when applied with force
-        let positionOnNodeToApplyForceTo = SCNVector3(x: 0.005, y: 0.005, z: 0.005)
+        let positionOnNodeToApplyForceTo = SCNVector3(x: 0.0, y: 0.0, z: 0.0)
         
         node.physicsBody?.applyForce(impulseVector, at: positionOnNodeToApplyForceTo, asImpulse: true)
     }
     
     func removeNode(_ node: SCNNode) {
-        if node is Target {
+        
+        if gameHelper.livePlanes.contains(node) {
             // Play explosion sound for bullet-ship collisions
             self.playSoundEffect(ofType: .explosion)
-            let particleSystem = SCNParticleSystem(named: "explosion", inDirectory: "art.scnassets/")
+            let particleSystem = SCNParticleSystem(named: "explosion0", inDirectory: "art.scnassets/")
             //let particleSize = particleSystem?.particleSize
             let systemNode = SCNNode()
             systemNode.addParticleSystem(particleSystem!)
@@ -344,14 +348,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             systemNode.position = node.presentation.position
             //node.addChildNode(systemNode)
             sceneView.scene.rootNode.addChildNode(systemNode)
-
-            if let target = node as? Target
-            {
-                if let targetIndex = gameHelper.liveTargets.index(of: target)
-                {
-                    gameHelper.liveTargets.remove(at: targetIndex)
-                }
+            if let targetIndex = gameHelper.livePlanes.index(of: node) {
+                gameHelper.livePlanes.remove(at: targetIndex)
             }
+            // node.removeFromParentNode()
         }else if node is Player {
             // Play collision sound for all collisions (bullet-bullet, etc.)
             self.playSoundEffect(ofType: .collision)
@@ -369,6 +369,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 //
 //        }
         node.removeFromParentNode()
+//        if (!(node is Bullet)) && !(gameHelper.livePlanes.contains(node)) {
+//            node.removeFromParentNode()
+//        }
     }
     
     func getTargetVector(for target: Target?) -> (SCNVector3, SCNVector3) { // (direction, position)
@@ -429,6 +432,7 @@ extension ViewController : SCNPhysicsContactDelegate
             (contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.bullets.rawValue && contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.target.rawValue){
             //target was hit from bullet!
             print("Hit target!")
+            print(contact)
             
             self.removeNode(contact.nodeB)
             self.removeNode(contact.nodeA)
@@ -454,6 +458,7 @@ extension ViewController : SCNPhysicsContactDelegate
             
             self.removeNode(contact.nodeA)
             self.removeNode(contact.nodeB)
+            print(contact)
             
             self.endPlaying()
         }

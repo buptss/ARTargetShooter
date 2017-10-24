@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B7F7CBBF1F9B263700EF6742 /* collision.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B7F7CBBE1F9B263700EF6742 /* collision.mp3 */; };
+		B7F7CBC11F9B267600EF6742 /* explosion.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B7F7CBC01F9B267500EF6742 /* explosion.mp3 */; };
+		B7F7CBC31F9B268000EF6742 /* torpedo.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B7F7CBC21F9B268000EF6742 /* torpedo.mp3 */; };
 		F616C32D1F15E21B00F3015D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F616C32C1F15E21B00F3015D /* AppDelegate.swift */; };
 		F616C32F1F15E21B00F3015D /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = F616C32E1F15E21B00F3015D /* art.scnassets */; };
 		F616C3311F15E21B00F3015D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F616C3301F15E21B00F3015D /* ViewController.swift */; };
@@ -20,6 +23,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B7F7CBBE1F9B263700EF6742 /* collision.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = collision.mp3; sourceTree = "<group>"; };
+		B7F7CBC01F9B267500EF6742 /* explosion.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = explosion.mp3; sourceTree = "<group>"; };
+		B7F7CBC21F9B268000EF6742 /* torpedo.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = torpedo.mp3; sourceTree = "<group>"; };
 		F616C3291F15E21B00F3015D /* ARPlebShooter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARPlebShooter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F616C32C1F15E21B00F3015D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F616C32E1F15E21B00F3015D /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -87,6 +93,9 @@
 		F616C3471F15E6CE00F3015D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				B7F7CBC21F9B268000EF6742 /* torpedo.mp3 */,
+				B7F7CBC01F9B267500EF6742 /* explosion.mp3 */,
+				B7F7CBBE1F9B263700EF6742 /* collision.mp3 */,
 				F616C32E1F15E21B00F3015D /* art.scnassets */,
 				F616C3351F15E21B00F3015D /* Assets.xcassets */,
 			);
@@ -161,9 +170,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B7F7CBC31F9B268000EF6742 /* torpedo.mp3 in Resources */,
+				B7F7CBC11F9B267600EF6742 /* explosion.mp3 in Resources */,
 				F616C32F1F15E21B00F3015D /* art.scnassets in Resources */,
 				F616C3391F15E21B00F3015D /* LaunchScreen.storyboard in Resources */,
 				F616C3361F15E21B00F3015D /* Assets.xcassets in Resources */,
+				B7F7CBBF1F9B263700EF6742 /* collision.mp3 in Resources */,
 				F616C3341F15E21B00F3015D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -317,10 +329,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 35B2KE884X;
+				DEVELOPMENT_TEAM = NGM6G3KVYW;
 				INFOPLIST_FILE = ARPlebShooter/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.netease.ARPlebShooter;
+				PRODUCT_BUNDLE_IDENTIFIER = com.netease21.ARPlebShooter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -331,10 +343,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 35B2KE884X;
+				DEVELOPMENT_TEAM = NGM6G3KVYW;
 				INFOPLIST_FILE = ARPlebShooter/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.netease.ARPlebShooter;
+				PRODUCT_BUNDLE_IDENTIFIER = com.netease21.ARPlebShooter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

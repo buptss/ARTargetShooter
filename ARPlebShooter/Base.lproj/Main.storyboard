@@ -31,10 +31,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" image="crosshair" translatesAutoresizingMaskIntoConstraints="NO" id="Obb-pr-oB9">
-                                <rect key="frame" x="162" y="309" width="50" height="50"/>
+                                <rect key="frame" x="162" y="309" width="100" height="100"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="OZx-jv-sxn"/>
-                                    <constraint firstAttribute="height" constant="50" id="vpr-Z2-fJ9"/>
+                                    <constraint firstAttribute="width" constant="150" id="OZx-jv-sxn"/>
+                                    <constraint firstAttribute="height" constant="150" id="vpr-Z2-fJ9"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="←" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Axw-1H-gBp" userLabel="leftDirectionIndicatorLabel">

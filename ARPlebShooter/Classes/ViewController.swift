@@ -437,7 +437,7 @@ extension ViewController : SCNPhysicsContactDelegate
             self.removeNode(contact.nodeB)
             self.removeNode(contact.nodeA)
             self.userScore += 1
-            self.addTarget()
+//            self.addTarget()
             
             //            if self.userScore < 3 {
             //                /* 如果条件为 true 执行以下语句 */
@@ -447,7 +447,15 @@ extension ViewController : SCNPhysicsContactDelegate
             //                self.addTarget();
             //            }
             
-            
+            if self.userScore == 7 {
+                self.addTarget()
+                self.addTarget()
+                self.addTarget()
+            }else if self.userScore >= 7 && self.userScore <= 9 {
+                self.userScore += 0
+            }else{
+                self.addTarget()
+            }
             
         }else if (contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.target.rawValue &&
             contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.player.rawValue) ||
